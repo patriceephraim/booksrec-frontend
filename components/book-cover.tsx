@@ -48,9 +48,7 @@ export function BookCover({
         const links = data?.items?.[0]?.volumeInfo?.imageLinks;
         const thumb = links?.thumbnail ?? links?.smallThumbnail;
         if (thumb) {
-          setCoverUrl(
-            thumb.replace("http://", "https://").replace("zoom=1", "zoom=2")
-          );
+          setCoverUrl(thumb.replace("http://", "https://"));
         }
       })
       .catch(() => {});
