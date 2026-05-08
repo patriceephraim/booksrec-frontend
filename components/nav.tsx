@@ -20,24 +20,26 @@ export function Nav() {
           BooksRec
         </Link>
 
-        <div className="flex items-center gap-8">
-          {LINKS.map((link) => {
-            const active =
-              pathname === link.href || pathname?.startsWith(link.href + "/");
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={
-                  active
-                    ? "text-sm font-medium text-white"
-                    : "text-sm text-white/40 hover:text-white transition-colors"
-                }
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+        <div className="flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
+            {LINKS.map((link) => {
+              const active =
+                pathname === link.href || pathname?.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={
+                    active
+                      ? "text-sm font-medium text-white"
+                      : "text-sm text-white/40 hover:text-white transition-colors"
+                  }
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
           <UserButton />
         </div>
       </div>

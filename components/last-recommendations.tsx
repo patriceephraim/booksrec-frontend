@@ -38,7 +38,7 @@ export function LastRecommendations() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
       {books.slice(0, 6).map((book, i) => (
         <div key={i} className="flex flex-col gap-2">
           <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl">

@@ -17,7 +17,7 @@ export default async function HomePage() {
 
         {/* Headline */}
         <div className="space-y-5">
-          <h1 className="text-6xl font-bold tracking-tight text-white drop-shadow-lg sm:text-7xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white drop-shadow-lg sm:text-6xl lg:text-7xl">
             Find your next
             <br />
             <span
@@ -31,14 +31,14 @@ export default async function HomePage() {
               favorite book
             </span>
           </h1>
-          <p className="max-w-lg text-lg leading-relaxed text-white/60">
+          <p className="max-w-lg text-base leading-relaxed text-white/60 sm:text-lg">
             Answer a short quiz about what you love to read. Our AI learns your
             taste and recommends books you&apos;ll actually finish.
           </p>
         </div>
 
         {/* CTA buttons */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
           {userId ? (
             <Link href="/dashboard">
               <Button size="lg" className="rounded-full bg-white px-8 text-black hover:bg-white/90">

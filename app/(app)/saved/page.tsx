@@ -41,8 +41,8 @@ export default async function SavedPage() {
 
   return (
     <div className="min-h-screen">
-      <main className="mx-auto flex max-w-3xl flex-col gap-6 p-6 pt-10">
-        <header className="flex items-center justify-between">
+      <main className="mx-auto flex max-w-3xl flex-col gap-6 p-4 pt-6 sm:p-6 sm:pt-10">
+        <header className="flex items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold text-white">My books</h1>
             <p className="mt-0.5 text-sm text-white/40">
@@ -78,9 +78,9 @@ export default async function SavedPage() {
                       <BookCover title={b.title} author={b.author} genre={b.genre} />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-baseline justify-between">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
                         <CardTitle className="text-white">{b.title}</CardTitle>
-                        <div className="flex items-center gap-2 ml-4 flex-shrink-0">
+                        <div className="flex items-center gap-2 flex-shrink-0">
                           {b.year && <span className="text-sm text-white/30">{b.year}</span>}
                           <UnsaveButton bookId={b.id} />
                         </div>

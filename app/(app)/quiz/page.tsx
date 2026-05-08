@@ -154,7 +154,7 @@ export default function QuizPage() {
 
   return (
     <div className="min-h-screen">
-      <main className="mx-auto flex max-w-2xl flex-col gap-6 p-6 pt-10">
+      <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 pt-6 sm:p-6 sm:pt-10">
         <header className="space-y-3">
           <h1 className="text-2xl font-semibold text-white">Find your next book</h1>
           <Progress value={((step - 1) / TOTAL_STEPS) * 100} className="h-1.5" />
@@ -378,9 +378,9 @@ function Results({
 }) {
   return (
     <div className="min-h-screen">
-      <main className="mx-auto flex max-w-3xl flex-col gap-6 p-6 pt-10">
-        <header className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-white">Your recommendations</h1>
+      <main className="mx-auto flex max-w-3xl flex-col gap-6 p-4 pt-6 sm:p-6 sm:pt-10">
+        <header className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-xl font-semibold text-white sm:text-2xl">Your recommendations</h1>
           <div className="flex gap-2">
             {onGetNewPicks && (
               <Button

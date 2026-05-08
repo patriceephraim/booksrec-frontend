@@ -39,12 +39,12 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen">
-      <main className="relative z-10 mx-auto max-w-6xl px-6 py-16">
+      <main className="relative z-10 mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-16">
 
         {/* Greeting */}
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-white">Hello, {greeting} 👋</h1>
-          <p className="mt-2 text-white/40">Discover your next great read, tailored just for you.</p>
+          <h1 className="text-2xl font-bold text-white sm:text-4xl">Hello, {greeting} 👋</h1>
+          <p className="mt-2 text-white/40 text-sm sm:text-base">Discover your next great read, tailored just for you.</p>
         </div>
 
         {/* Stats */}
@@ -59,8 +59,8 @@ export default async function DashboardPage() {
         </div>
 
         {/* Recommended section */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="flex items-center gap-2 text-xl font-semibold text-white">
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <h2 className="flex items-center gap-2 text-base font-semibold text-white sm:text-xl">
             Recommended for you
             <span className="text-violet-400 text-base">✦</span>
           </h2>
