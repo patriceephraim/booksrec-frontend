@@ -74,7 +74,7 @@ export default async function SavedPage() {
                 <CardHeader>
                   <div className="flex items-start gap-4">
                     {/* Cover */}
-                    <div className="relative hidden sm:block h-20 w-14 flex-shrink-0 overflow-hidden rounded-xl">
+                    <div className="relative h-16 w-11 flex-shrink-0 overflow-hidden rounded-lg sm:h-20 sm:w-14 sm:rounded-xl">
                       <BookCover title={b.title} author={b.author} genre={b.genre} />
                     </div>
                     <div className="flex-1">
