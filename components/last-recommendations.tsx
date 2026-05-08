@@ -40,8 +40,14 @@ export function LastRecommendations() {
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
       {books.slice(0, 6).map((book, i) => (
-        <div key={i} className="flex flex-col gap-2">
-          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl">
+        <a
+          key={i}
+          href={book.goodreads_search_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col gap-2 group"
+        >
+          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl transition-transform group-hover:scale-[1.03]">
             <BookCover title={book.title} author={book.author} genre={book.genre} />
             {book.genre && (
               <span className="absolute bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/50 px-2 py-0.5 text-[10px] text-white/80 backdrop-blur-sm">
@@ -50,10 +56,10 @@ export function LastRecommendations() {
             )}
           </div>
           <div className="px-0.5">
-            <p className="line-clamp-2 text-xs font-semibold leading-snug text-white">{book.title}</p>
+            <p className="line-clamp-2 text-xs font-semibold leading-snug text-white group-hover:text-violet-300 transition-colors">{book.title}</p>
             <p className="mt-0.5 text-[11px] text-white/40">{book.author}</p>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   );
