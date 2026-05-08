@@ -407,7 +407,7 @@ function Results({
             <Card key={i} className="border-white/10 bg-white/5">
               <CardHeader>
                 <div className="flex items-start gap-4">
-                  <div className="relative hidden sm:block h-16 w-11 flex-shrink-0 overflow-hidden rounded-lg">
+                  <div className="relative h-14 w-10 flex-shrink-0 overflow-hidden rounded-lg sm:h-16 sm:w-11">
                     <BookCover title={b.title} author={b.author} genre={b.genre} />
                   </div>
                   <div>
