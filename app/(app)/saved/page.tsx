@@ -78,9 +78,9 @@ export default async function SavedPage() {
                       <BookCover title={b.title} author={b.author} genre={b.genre} />
                     </div>
                     <div className="flex-1">
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <CardTitle className="text-white">{b.title}</CardTitle>
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-white line-clamp-2">{b.title}</CardTitle>
+                        <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
                           {b.year && <span className="text-sm text-white/30">{b.year}</span>}
                           <UnsaveButton bookId={b.id} />
                         </div>
