@@ -10,7 +10,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Nav />
-      {children}
+      <div className="pb-20 sm:pb-0">{children}</div>
     </>
   );
 }
