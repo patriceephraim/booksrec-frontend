@@ -23,8 +23,8 @@ function coverGradient(genre: string | null): string {
 
 /**
  * Fills its parent container (which must be `relative overflow-hidden`).
- * Fetches a cover from Google Books API; falls back to a genre gradient
- * with the title overlaid if nothing is found or the image errors.
+ * Fetches a cover from Open Library; falls back to Google Books if not found;
+ * finally falls back to a genre gradient with the title overlaid.
  */
 export function BookCover({
   title,
@@ -39,19 +39,38 @@ export function BookCover({
   const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
-    const query = encodeURIComponent(`intitle:${title} inauthor:${author}`);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1&fields=items(volumeInfo/imageLinks)`
-    )
-      .then((r) => r.json())
-      .then((data) => {
+    async function fetchCover() {
+      // 1. Try Open Library search API
+      try {
+        const q = encodeURIComponent(title);
+        const a = encodeURIComponent(author.split(" ")[0]); // use first word of author name
+        const res = await fetch(
+          `https://openlibrary.org/search.json?title=${q}&author=${a}&fields=cover_i&limit=1`
+        );
+        const data = await res.json();
+        const coverId = data?.docs?.[0]?.cover_i;
+        if (coverId) {
+          setCoverUrl(`https://covers.openlibrary.org/b/id/${coverId}-M.jpg`);
+          return;
+        }
+      } catch {}
+
+      // 2. Fall back to Google Books
+      try {
+        const query = encodeURIComponent(`intitle:${title} inauthor:${author}`);
+        const res = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1&fields=items(volumeInfo/imageLinks)`
+        );
+        const data = await res.json();
         const links = data?.items?.[0]?.volumeInfo?.imageLinks;
         const thumb = links?.thumbnail ?? links?.smallThumbnail;
         if (thumb) {
           setCoverUrl(thumb.replace("http://", "https://"));
         }
-      })
-      .catch(() => {});
+      } catch {}
+    }
+
+    fetchCover();
   }, [title, author]);
 
   if (coverUrl && !imgError) {
