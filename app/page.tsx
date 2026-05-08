@@ -67,7 +67,7 @@ export default async function HomePage() {
 
         {/* Feature hints */}
         <div className="flex flex-wrap justify-center gap-8 text-sm text-white/40">
-          {["5-step quiz", "AI-matched picks", "Save your list"].map((f) => (
+          {["7-step quiz", "AI-matched picks", "Save your list"].map((f) => (
             <span key={f} className="flex items-center gap-2">
               <span className="h-px w-4 bg-white/20" />
               {f}
