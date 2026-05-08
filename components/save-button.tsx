@@ -37,7 +37,11 @@ export function SaveButton({ book }: { book: BookRecommendation }) {
 
   if (status === "saved") {
     return (
-      <Button variant="outline" size="sm" disabled>
+      <Button
+        size="sm"
+        disabled
+        className="rounded-full border border-green-500/30 bg-green-500/10 text-green-400"
+      >
         Saved ✓
       </Button>
     );
@@ -46,15 +50,15 @@ export function SaveButton({ book }: { book: BookRecommendation }) {
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="outline"
         size="sm"
         onClick={handleClick}
         disabled={status === "saving"}
+        className="rounded-full bg-violet-600 hover:bg-violet-700 text-white disabled:opacity-50"
       >
         {status === "saving" ? "Saving..." : "Save"}
       </Button>
       {errorMsg && (
-        <span className="text-xs text-destructive">{errorMsg}</span>
+        <span className="text-xs text-red-400">{errorMsg}</span>
       )}
     </div>
   );

@@ -1,20 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BookCover } from "@/components/book-cover";
+import { UnsaveButton } from "@/components/unsave-button";
 import Link from "next/link";
-
-/**
- * "My Books" page — server component.
- *
- * Runs on the server, fetches the user's saved books directly from the
- * FastAPI backend with the Clerk session token, and renders the list.
- *
- * Why a server component? Three wins:
- *   1. The fetch happens server-to-server (faster, no CORS, no exposing
- *      the API URL to the browser more than necessary).
- *   2. The Clerk session token never touches the client.
- *   3. The HTML arrives already populated — no loading spinner on first paint.
- */
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
@@ -32,89 +21,97 @@ type SavedBook = {
 async function fetchSavedBooks(token: string): Promise<SavedBook[]> {
   const res = await fetch(`${API_URL}/api/saved`, {
     headers: { Authorization: `Bearer ${token}` },
-    // Don't cache — saved books can change anytime.
     cache: "no-store",
   });
-
-  if (!res.ok) {
-    throw new Error(`Failed to load saved books: ${res.status}`);
-  }
-
+  if (!res.ok) throw new Error(`Failed to load saved books: ${res.status}`);
   const data = (await res.json()) as { books: SavedBook[] };
   return data.books;
 }
+
 
 export default async function SavedPage() {
   const { getToken } = await auth();
   const token = await getToken();
 
   if (!token) {
-    // Middleware should have already redirected, but belt-and-suspenders.
-    return <p className="p-6">Please sign in.</p>;
+    return <p className="p-6 text-white/50">Please sign in.</p>;
   }
 
   const books = await fetchSavedBooks(token);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 p-6">
-      <header className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">My books</h1>
-          <p className="text-sm text-muted-foreground">
-            {books.length} {books.length === 1 ? "book" : "books"} saved
-          </p>
-        </div>
-        <Link href="/quiz">
-          <Button>Find more</Button>
-        </Link>
-      </header>
-
-      {books.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
-            <p className="text-muted-foreground">
-              You haven&apos;t saved any books yet.
+    <div className="min-h-screen">
+      <main className="mx-auto flex max-w-3xl flex-col gap-6 p-6 pt-10">
+        <header className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-white">My books</h1>
+            <p className="mt-0.5 text-sm text-white/40">
+              {books.length} {books.length === 1 ? "book" : "books"} saved
             </p>
-            <Link href="/quiz">
-              <Button>Take the quiz</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid gap-4">
-          {books.map((b) => (
-            <Card key={b.id}>
-              <CardHeader>
-                <div className="flex items-baseline justify-between">
-                  <CardTitle>{b.title}</CardTitle>
-                  {b.year && (
-                    <span className="text-sm text-muted-foreground">{b.year}</span>
+          </div>
+          <Link href="/quiz">
+            <Button className="rounded-full bg-violet-600 hover:bg-violet-700 text-white">
+              Find more
+            </Button>
+          </Link>
+        </header>
+
+        {books.length === 0 ? (
+          <Card className="border-white/10 bg-white/5">
+            <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
+              <p className="text-white/40">You haven&apos;t saved any books yet.</p>
+              <Link href="/quiz">
+                <Button className="rounded-full bg-violet-600 hover:bg-violet-700 text-white">
+                  Take the quiz
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-4">
+            {books.map((b) => (
+              <Card key={b.id} className="border-white/10 bg-white/5">
+                <CardHeader>
+                  <div className="flex items-start gap-4">
+                    {/* Cover */}
+                    <div className="relative hidden sm:block h-20 w-14 flex-shrink-0 overflow-hidden rounded-xl">
+                      <BookCover title={b.title} author={b.author} genre={b.genre} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-baseline justify-between">
+                        <CardTitle className="text-white">{b.title}</CardTitle>
+                        <div className="flex items-center gap-2 ml-4 flex-shrink-0">
+                          {b.year && <span className="text-sm text-white/30">{b.year}</span>}
+                          <UnsaveButton bookId={b.id} />
+                        </div>
+                      </div>
+                      <p className="mt-0.5 text-sm text-white/40">
+                        {b.author}
+                        {b.genre && <> &middot; {b.genre}</>}
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {b.why_recommended && (
+                    <p className="text-sm text-white/60">{b.why_recommended}</p>
                   )}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {b.author}
-                  {b.genre && <> &middot; {b.genre}</>}
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {b.why_recommended && (
-                  <p className="text-sm">{b.why_recommended}</p>
-                )}
-                {b.goodreads_url && (
-                  <a
-                    href={b.goodreads_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium underline underline-offset-4"
-                  >
-                    View on Goodreads &rarr;
-                  </a>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </main>
+                  {b.goodreads_url && (
+                    <a
+                      href={b.goodreads_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-violet-400 underline underline-offset-4 hover:text-violet-300"
+                    >
+                      View on Goodreads &rarr;
+                    </a>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
   );
 }

@@ -14,8 +14,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className="antialiased">{children}</body>
+      <html lang="en" className="dark">
+        <body className="antialiased">
+          {/* Background image — fixed so it stays put while scrolling */}
+          <div className="fixed inset-0 -z-10 bg-[url('/books.png')] bg-cover bg-center bg-no-repeat" />
+          {/* Dark overlay for readability */}
+          <div className="fixed inset-0 -z-10 bg-black/65" />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

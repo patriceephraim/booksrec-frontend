@@ -61,3 +61,7 @@ export function saveBook(book: BookRecommendation, token: string): Promise<{ sav
 export function listSavedBooks(token: string): Promise<{ books: unknown[] }> {
   return request("/api/saved", { method: "GET", token });
 }
+
+export function unsaveBook(bookId: string, token: string): Promise<{ deleted: string }> {
+  return request(`/api/saved/${bookId}`, { method: "DELETE", token });
+}
