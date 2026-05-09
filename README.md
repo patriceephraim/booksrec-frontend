@@ -2,11 +2,6 @@
 
 url to the app: https://booksrec-frontend.vercel.app
 
-## Screenshots
-
-> _Add screenshots here: landing page, quiz step, results, My Books._
-> _For now, see it live at the URL above._
-
 AI-powered book recommendation app. Users sign in, answer a 7-step quiz about their reading preferences, and receive personalized book recommendations. Recommendations can be saved to a personal "My Books" list and unsaved at any time.
 
 ## Tech Stack
