@@ -2,6 +2,11 @@
 
 url to the app: https://booksrec-frontend.vercel.app
 
+## Screenshots
+
+> _Add screenshots here: landing page, quiz step, results, My Books._
+> _For now, see it live at the URL above._
+
 AI-powered book recommendation app. Users sign in, answer a 7-step quiz about their reading preferences, and receive personalized book recommendations. Recommendations can be saved to a personal "My Books" list and unsaved at any time.
 
 ## Tech Stack
@@ -42,7 +47,7 @@ public/
 ## Routes
 
 | Route | Auth | Description |
-|-------|------|-------------|
+|---|---|---|
 | `/` | No | Landing page with sign-in / sign-up CTAs |
 | `/sign-in` | No | Clerk sign-in |
 | `/sign-up` | No | Clerk sign-up |
@@ -106,10 +111,26 @@ npm run start   # Start production server
 npm run lint    # Run ESLint
 ```
 
+## Built with AI tooling
+
+This project was built using AI development tools as a deliberate
+workflow choice — Claude (Anthropic) and Cursor for code generation,
+debugging, and refactoring. The architecture, prompt-engineering
+decisions, and product choices are mine; the AI tooling accelerated
+the implementation.
+
+Notable AI-driven decisions in this codebase:
+- **Tool-use API** instead of free-text JSON parsing for structured
+  LLM output (see backend repo)
+- **Per-route auth via Clerk middleware + FastAPI dependencies**
+  rather than scattered checks
+- **Pydantic + TypeScript twin schemas** so frontend and backend
+  validate the same shapes
+
 ## Backend API Contract
 
 | Method | Path | Auth | Description |
-|--------|------|------|-------------|
+|---|---|---|---|
 | `POST` | `/api/recommend` | No | Get recommendations from quiz answers |
 | `POST` | `/api/save` | Bearer token | Save a book |
 | `GET` | `/api/saved` | Bearer token | List saved books |
